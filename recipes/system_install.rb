@@ -34,9 +34,10 @@ key_server = node['rvm']['gpg']['keyserver'] || "hkp://keys.gnupg.net"
 home_dir = "#{node['rvm']['gpg']['homedir'] || '~'}/.gnupg"
 
 execute 'Adding gpg key' do
+  user node['rvm']['install_user']
   command "`which gpg2 || which gpg` --keyserver #{key_server} --homedir #{home_dir} --recv-keys #{node['rvm']['gpg_key']}"
   only_if 'which gpg2 || which gpg'
   not_if { node['rvm']['gpg_key'].empty? }
 end
 
-rvm_installation("root")
+rvm_installation(node['rvm']['install_user'])
