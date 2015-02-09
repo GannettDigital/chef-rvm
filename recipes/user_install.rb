@@ -19,6 +19,18 @@
 
 include_recipe "rvm"
 
+key_server = node['rvm']['gpg']['keyserver'] || "hkp://keys.gnupg.net"
+
+node["rvm"]["installs"].each do |u, opts|
+  execute 'Adding gpg key for user' do
+  home_dir = opts['homedir']
+  user u
+  command "`gpg --keyserver #{key_server} --homedir #{home_dir}/.gnupg --recv-keys #{node['rvm']['gpg_key']}`"
+  only_if 'which gpg2 || which gpg'
+  not_if { node['rvm']['gpg_key'].empty? }
+end
+end
+
 node["rvm"]["installs"].each do |user, opts|
   # if user hash is falsy (nil, false) then we're not installing
   next unless opts
