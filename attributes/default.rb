@@ -59,11 +59,11 @@ default['rvm']['gpg']['homedir'] = '/root'
 
 case platform
 when "redhat","centos","fedora","scientific","amazon"
-  node.set['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git}
+  default['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git}
 when "debian","ubuntu","suse"
-  node.set['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git-core}
+  default['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git-core}
 when "gentoo"
-  node.set['rvm']['install_pkgs']   = %w{git}
+  default['rvm']['install_pkgs']   = %w{git}
 when "mac_os_x", "mac_os_x_server"
-  node.set['rvm']['install_pkgs']   = %w{git}
+  default['rvm']['install_pkgs']   = %w{git}
 end
